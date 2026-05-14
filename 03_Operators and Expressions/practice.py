@@ -13,5 +13,12 @@ while True:
         print("Error! Can't divide by zero")
         continue
    
+   #-----------------------------------------------------
+
+#This program is built to convert temperature from Fahrenheit to Celsius
+T_C = float(input("Enter the temperature in Celsius:"))
+T_F = (T_C * 9/5) +32
+print(f"{T_F} degree Fahrenheit\nSo, the temperature {T_C} degree Celsius is equal to {T_F} degree Fahrenheit")
+
 
     
