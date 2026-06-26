@@ -1,0 +1,295 @@
+==============================
+        SPECIAL METHODS
+     (Magic / Dunder Methods)
+==============================
+
+--------------
+DEFINITION
+--------------
+- Special methods are predefined methods in Python
+  that have double underscores before and after their name
+- Also called "magic methods" or "dunder methods"
+  (dunder = double underscore)
+- They are automatically called by Python in specific situations
+- You don't call them directly — Python calls them behind the scenes
+- They allow objects to behave like built-in Python types
+
+
+--------------
+WHY USE THEM?
+--------------
+- They let you define how your objects behave with
+  built-in Python operations
+- Examples:
+  - What happens when you print an object
+  - What happens when you add two objects with +
+  - What happens when you compare two objects with ==
+  - What happens when you use len() on an object
+- They make custom objects feel natural and Pythonic
+
+
+--------------
+NAMING PATTERN
+--------------
+- Always start and end with double underscores __
+- Format: __methodname__
+- Examples: __init__, __str__, __len__, __add__
+- Never create your own methods with __ unless
+  intentionally making a dunder method
+
+
+--------------
+MOST COMMON SPECIAL METHODS
+--------------
+
+  __init__()     →  constructor, runs on object creation
+  __str__()      →  string for end user (print)
+  __repr__()     →  string for developer (debug)
+  __len__()      →  defines len() behavior
+  __add__()      →  defines + operator behavior
+  __sub__()      →  defines - operator behavior
+  __mul__()      →  defines * operator behavior
+  __eq__()       →  defines == behavior
+  __lt__()       →  defines < behavior
+  __gt__()       →  defines > behavior
+  __le__()       →  defines <= behavior
+  __ge__()       →  defines >= behavior
+  __del__()      →  runs when object is deleted
+  __contains__() →  defines "in" keyword behavior
+  __call__()     →  makes object callable like a function
+
+
+--------------
+1. __init__()
+--------------
+- Runs automatically when object is created
+- Used to initialize attributes
+
+  class Person:
+      def __init__(self, name, age):
+          self.name = name
+          self.age = age
+
+  p1 = Person("Ali", 20)   # __init__ called automatically
+
+
+--------------
+2. __str__()
+--------------
+- Defines what print(object) shows
+- Should return a user-friendly string
+
+  class Person:
+      def __init__(self, name):
+          self.name = name
+
+      def __str__(self):
+          return f"Person: {self.name}"
+
+  p1 = Person("Ali")
+  print(p1)    # Person: Ali
+
+
+--------------
+3. __repr__()
+--------------
+- Defines developer-facing string representation
+- Used for debugging
+- Called by repr(object)
+- print() falls back to __repr__ if __str__ is not defined
+
+  class Person:
+      def __init__(self, name):
+          self.name = name
+
+      def __repr__(self):
+          return f"Person(name='{self.name}')"
+
+  p1 = Person("Ali")
+  print(repr(p1))    # Person(name='Ali')
+
+
+--------------
+4. __len__()
+--------------
+- Defines behavior of len(object)
+- Must return an integer
+
+  class Bag:
+      def __init__(self, items):
+          self.items = items
+
+      def __len__(self):
+          return len(self.items)
+
+  b = Bag(["book", "pen", "notebook"])
+  print(len(b))    # 3
+
+
+--------------
+5. __add__()
+--------------
+- Defines behavior of + operator between two objects
+
+  class Point:
+      def __init__(self, x, y):
+          self.x = x
+          self.y = y
+
+      def __add__(self, other):
+          return Point(self.x + other.x, self.y + other.y)
+
+      def __str__(self):
+          return f"Point({self.x}, {self.y})"
+
+  p1 = Point(1, 2)
+  p2 = Point(3, 4)
+  print(p1 + p2)    # Point(4, 6)
+
+
+--------------
+6. __sub__() , __mul__()
+--------------
+- Same pattern as __add__() but for - and *
+
+  class Point:
+      def __init__(self, x, y):
+          self.x = x
+          self.y = y
+
+      def __sub__(self, other):
+          return Point(self.x - other.x, self.y - other.y)
+
+      def __mul__(self, factor):
+          return Point(self.x * factor, self.y * factor)
+
+      def __str__(self):
+          return f"Point({self.x}, {self.y})"
+
+  p1 = Point(5, 6)
+  p2 = Point(2, 3)
+  print(p1 - p2)       # Point(3, 3)
+  print(p1 * 2)        # Point(10, 12)
+
+
+--------------
+7. __eq__() , __lt__() , __gt__()
+--------------
+- Define comparison behavior between objects
+
+  class Person:
+      def __init__(self, name, age):
+          self.name = name
+          self.age = age
+
+      def __eq__(self, other):
+          return self.age == other.age
+
+      def __lt__(self, other):
+          return self.age < other.age
+
+      def __gt__(self, other):
+          return self.age > other.age
+
+  p1 = Person("Ali", 20)
+  p2 = Person("Ahmed", 25)
+
+  print(p1 == p2)    # False
+  print(p1 < p2)     # True
+  print(p1 > p2)     # False
+
+
+--------------
+8. __del__()
+--------------
+- Called automatically when an object is deleted
+- Used for cleanup tasks
+
+  class Person:
+      def __init__(self, name):
+          self.name = name
+
+      def __del__(self):
+          print(f"{self.name} object deleted")
+
+  p1 = Person("Ali")
+  del p1    # Ali object deleted
+
+
+--------------
+9. __contains__()
+--------------
+- Defines behavior of "in" keyword
+
+  class Bag:
+      def __init__(self, items):
+          self.items = items
+
+      def __contains__(self, item):
+          return item in self.items
+
+  b = Bag(["book", "pen", "notebook"])
+  print("pen" in b)       # True
+  print("laptop" in b)    # False
+
+
+--------------
+10. __call__()
+--------------
+- Makes an object callable like a function
+- Called when you use () on an object
+
+  class Multiplier:
+      def __init__(self, factor):
+          self.factor = factor
+
+      def __call__(self, number):
+          return number * self.factor
+
+  double = Multiplier(2)
+  print(double(5))     # 10
+  print(double(10))    # 20
+
+
+--------------
+KEY POINTS
+--------------
+- Special methods have __ before and after the name
+- Also called magic methods or dunder methods
+- Python calls them automatically — you rarely call them directly
+- They let custom objects work with built-in Python operations
+- You override them to define custom behavior
+- They make your classes feel like native Python types
+
+
+--------------
+FULL REFERENCE SUMMARY
+--------------
+  __init__()      →  object creation / constructor
+  __str__()       →  print() / user friendly string
+  __repr__()      →  repr() / developer debug string
+  __len__()       →  len() behavior
+  __add__()       →  + operator
+  __sub__()       →  - operator
+  __mul__()       →  * operator
+  __eq__()        →  == comparison
+  __lt__()        →  < comparison
+  __gt__()        →  > comparison
+  __le__()        →  <= comparison
+  __ge__()        →  >= comparison
+  __del__()       →  object deletion cleanup
+  __contains__()  →  "in" keyword
+  __call__()      →  object called like a function
+
+
+--------------
+QUICK RECAP
+--------------
+- Dunder       →  double underscore __ on both sides
+- Auto called  →  Python triggers them, not you
+- Override     →  you define the behavior inside your class
+- Purpose      →  make objects work with Python's built-ins
+- Common ones  →  __init__, __str__, __repr__, __len__, __add__
+- Powerful     →  let custom classes behave like built-in types
+
+==============================

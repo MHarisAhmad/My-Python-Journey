@@ -1,0 +1,135 @@
+==============================
+           METHODS
+==============================
+
+--------------
+DEFINITION
+--------------
+- Methods are functions defined inside a class
+- They describe the behaviors and actions of an object
+- Always take "self" as the first parameter
+- Called using dot notation → object.method()
+
+
+--------------
+WHY METHODS?
+--------------
+- Attributes store the data of an object
+- Methods define what the object can DO with that data
+- Together, attributes and methods make objects complete
+
+
+--------------
+BASIC EXAMPLE
+--------------
+  class Person:
+      def __init__(self, name, age):
+          self.name = name
+          self.age = age
+
+      def greet(self):                          # method
+          print(f"Hi, I am {self.name}")
+
+      def is_adult(self):                       # method
+          return self.age >= 18
+
+  p1 = Person("Ali", 20)
+  p1.greet()              # Hi, I am Ali
+  print(p1.is_adult())    # True
+
+
+--------------
+METHODS WITH PARAMETERS
+--------------
+- Methods can accept extra parameters besides self
+
+  class Calculator:
+      def add(self, a, b):
+          return a + b
+
+      def multiply(self, a, b):
+          return a * b
+
+  c = Calculator()
+  print(c.add(3, 5))        # 8
+  print(c.multiply(4, 6))   # 24
+
+
+--------------
+METHODS THAT MODIFY ATTRIBUTES
+--------------
+- Methods can update the object's own attributes using self
+
+  class BankAccount:
+      def __init__(self, balance):
+          self.balance = balance
+
+      def deposit(self, amount):
+          self.balance += amount
+
+      def withdraw(self, amount):
+          self.balance -= amount
+
+      def show_balance(self):
+          print(f"Balance: {self.balance}")
+
+  acc = BankAccount(1000)
+  acc.deposit(500)
+  acc.withdraw(200)
+  acc.show_balance()    # Balance: 1300
+
+
+--------------
+TYPES OF METHODS
+--------------
+
+1. Instance Methods
+   - Most common type
+   - First parameter is always self
+   - Can access and modify instance attributes
+
+   def greet(self):
+       print(self.name)
+
+2. Class Methods
+   - Use @classmethod decorator
+   - First parameter is cls (the class itself)
+   - Can access class attributes but not instance attributes
+
+   @classmethod
+   def info(cls):
+       print(cls.species)
+
+3. Static Methods
+   - Use @staticmethod decorator
+   - No self or cls parameter
+   - Does not access instance or class attributes
+   - Works like a regular function, just grouped inside the class
+
+   @staticmethod
+   def general_info():
+       print("This is a Person class")
+
+
+--------------
+KEY POINTS
+--------------
+- Methods are functions inside a class
+- Always have self as the first parameter
+- Describe what an object can do
+- Can read and modify object attributes
+- Called using dot notation on an object
+- Three types: instance, class, and static methods
+
+
+--------------
+QUICK RECAP
+--------------
+- Method           →  function inside a class
+- self             →  always first parameter
+- Instance method  →  works with object data (most common)
+- Class method     →  works with class data (@classmethod)
+- Static method    →  no object or class data (@staticmethod)
+- Dot notation     →  object.method() to call
+
+==============================

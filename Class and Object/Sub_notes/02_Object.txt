@@ -1,0 +1,109 @@
+==============================
+        WHAT IS AN OBJECT?
+==============================
+
+--------------
+DEFINITION
+--------------
+- An object is a real instance created from a class
+- It is the actual "thing" built using the class blueprint
+- Each object has its own copy of the attributes defined in the class
+- Objects are also called "instances"
+- Creating an object from a class is called "instantiation"
+
+
+--------------
+REAL LIFE ANALOGY
+--------------
+- Class  →  Blueprint of a Car
+- Object →  Actual Car built from that blueprint
+- You can build many cars from one blueprint
+- Each car (object) has its own color, model, speed etc.
+
+
+--------------
+HOW TO CREATE AN OBJECT
+--------------
+- Write the class name followed by parentheses ()
+
+  class Person:
+      def __init__(self, name, age):
+          self.name = name
+          self.age = age
+
+  p1 = Person("Ali", 20)     # p1 is an object
+  p2 = Person("Ahmed", 25)   # p2 is another object
+
+- p1 and p2 are two separate objects from the same class
+- Each holds its own data
+
+
+--------------
+ACCESSING OBJECT ATTRIBUTES
+--------------
+- Use dot notation to access attributes of an object
+
+  print(p1.name)    # Ali
+  print(p2.name)    # Ahmed
+  print(p1.age)     # 20
+
+
+--------------
+ACCESSING OBJECT METHODS
+--------------
+- Same dot notation is used to call methods
+
+  class Person:
+      def __init__(self, name):
+          self.name = name
+
+      def greet(self):
+          print(f"Hi, I am {self.name}")
+
+  p1 = Person("Ali")
+  p1.greet()    # Hi, I am Ali
+
+
+--------------
+MULTIPLE OBJECTS — INDEPENDENT FROM EACH OTHER
+--------------
+- Each object is completely independent
+- Changing one object does not affect another
+
+  p1.name = "Usman"
+  print(p1.name)    # Usman
+  print(p2.name)    # Ahmed — unchanged
+
+
+--------------
+CHECKING OBJECT TYPE
+--------------
+- type() tells you which class an object belongs to
+- isinstance() checks if an object is an instance of a class
+
+  print(type(p1))              # <class '__main__.Person'>
+  print(isinstance(p1, Person))  # True
+
+
+--------------
+KEY POINTS
+--------------
+- Object is a real instance of a class
+- Created by calling the class like a function → Person()
+- Each object has its own separate data
+- Attributes and methods are accessed using dot notation
+- Multiple objects can be created from one class
+- Objects are independent of each other
+- "instance" and "object" mean the same thing
+
+
+--------------
+QUICK RECAP
+--------------
+- Object / Instance  →  real thing created from a class
+- Instantiation      →  the process of creating an object
+- Dot notation       →  used to access attributes and methods
+- type()             →  check what class an object belongs to
+- isinstance()       →  check if object is instance of a class
+
+==============================

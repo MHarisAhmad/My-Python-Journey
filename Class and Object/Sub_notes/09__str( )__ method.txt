@@ -1,0 +1,112 @@
+==============================
+        __str__() METHOD
+==============================
+
+--------------
+DEFINITION
+--------------
+- __str__() is a special magic / dunder method in Python
+- It defines what gets displayed when you print an object
+- Without it, printing an object shows an ugly memory address
+- You write it to give a clean, readable string representation
+
+
+--------------
+WITHOUT __str__()
+--------------
+  class Person:
+      def __init__(self, name):
+          self.name = name
+
+  p1 = Person("Ali")
+  print(p1)    # <__main__.Person object at 0x000001A3B>
+  
+  - This memory address is not useful or readable
+
+
+--------------
+WITH __str__()
+--------------
+  class Person:
+      def __init__(self, name, age):
+          self.name = name
+          self.age = age
+
+      def __str__(self):
+          return f"Person(name={self.name}, age={self.age})"
+
+  p1 = Person("Ali", 20)
+  print(p1)    # Person(name=Ali, age=20)
+
+  - Now printing gives clean, readable output
+
+
+--------------
+HOW IT WORKS
+--------------
+- When you call print(p1), Python automatically
+  looks for __str__() in the class and calls it
+- Whatever string __str__() returns is what gets printed
+- You must return a string from __str__() — not print it
+
+
+--------------
+__str__() vs __repr__()
+--------------
+- Both are magic methods for string representation
+- __str__()   →  meant for end users — readable output
+- __repr__()  →  meant for developers — detailed/debug output
+- print() uses __str__() first, falls back to __repr__()
+
+  class Person:
+      def __init__(self, name):
+          self.name = name
+
+      def __str__(self):
+          return f"Person: {self.name}"         # user friendly
+
+      def __repr__(self):
+          return f"Person(name='{self.name}')"  # developer friendly
+
+  p1 = Person("Ali")
+  print(p1)       # Person: Ali         (uses __str__)
+  print(repr(p1)) # Person(name='Ali')  (uses __repr__)
+
+
+--------------
+PRACTICAL USE
+--------------
+  class BankAccount:
+      def __init__(self, owner, balance):
+          self.owner = owner
+          self.balance = balance
+
+      def __str__(self):
+          return f"Account of {self.owner} | Balance: {self.balance}"
+
+  acc = BankAccount("Ali", 5000)
+  print(acc)    # Account of Ali | Balance: 5000
+
+
+--------------
+KEY POINTS
+--------------
+- __str__() controls what print(object) shows
+- Without it, you get a memory address — not useful
+- Must return a string
+- Called automatically by print() and str()
+- __repr__() is the developer-facing version of __str__()
+- Double underscores make it a magic / dunder method
+
+
+--------------
+QUICK RECAP
+--------------
+- __str__()    →  defines print output of an object
+- return       →  must return a string, not print
+- print(obj)   →  automatically calls __str__()
+- str(obj)     →  also calls __str__()
+- __repr__()   →  developer version, more detailed
+- Dunder       →  double underscore before and after name
+
+==============================

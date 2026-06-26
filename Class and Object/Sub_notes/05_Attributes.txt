@@ -1,0 +1,123 @@
+==============================
+          ATTRIBUTES
+==============================
+
+--------------
+DEFINITION
+--------------
+- Attributes are variables that belong to a class or object
+- They store the data / state of an object
+- Accessed using dot notation → object.attribute
+- There are two types: Instance Attributes and Class Attributes
+
+
+--------------
+TYPE 1 — INSTANCE ATTRIBUTES
+--------------
+- Defined inside __init__() using self
+- Unique to each object — every object has its own copy
+- Changing one object's attribute does not affect others
+
+  class Person:
+      def __init__(self, name, age):
+          self.name = name    # instance attribute
+          self.age = age      # instance attribute
+
+  p1 = Person("Ali", 20)
+  p2 = Person("Ahmed", 25)
+
+  print(p1.name)    # Ali
+  print(p2.name)    # Ahmed — completely separate
+
+
+--------------
+TYPE 2 — CLASS ATTRIBUTES
+--------------
+- Defined directly inside the class, outside any method
+- Shared across ALL objects of the class
+- If changed at class level, it affects all objects
+
+  class Person:
+      species = "Human"    # class attribute
+
+  p1 = Person()
+  p2 = Person()
+
+  print(p1.species)    # Human
+  print(p2.species)    # Human — same for all
+
+
+--------------
+INSTANCE vs CLASS ATTRIBUTE — KEY DIFFERENCE
+--------------
+  class Person:
+      species = "Human"              # class attribute — shared
+
+      def __init__(self, name):
+          self.name = name           # instance attribute — unique
+
+  p1 = Person("Ali")
+  p2 = Person("Ahmed")
+
+  print(p1.species)    # Human   (class attribute)
+  print(p1.name)       # Ali     (instance attribute)
+  print(p2.name)       # Ahmed   (instance attribute)
+
+
+--------------
+MODIFYING ATTRIBUTES
+--------------
+- Instance attribute can be changed per object
+
+  p1.name = "Usman"
+  print(p1.name)    # Usman
+  print(p2.name)    # Ahmed — unchanged
+
+- Class attribute can be changed at class level
+
+  Person.species = "Human Being"
+  print(p1.species)    # Human Being
+  print(p2.species)    # Human Being — changed for all
+
+
+--------------
+ADDING NEW ATTRIBUTES AFTER CREATION
+--------------
+- You can add new attributes to an object even after creation
+
+  p1.salary = 50000
+  print(p1.salary)    # 50000
+  print(p2.salary)    # AttributeError — p2 doesn't have it
+
+
+--------------
+ATTRIBUTE FUNCTIONS
+--------------
+- getattr(obj, "attr")          →  get attribute value
+- setattr(obj, "attr", value)   →  set / update attribute
+- hasattr(obj, "attr")          →  check if attribute exists
+- delattr(obj, "attr")          →  delete an attribute
+
+
+--------------
+KEY POINTS
+--------------
+- Attributes store the data of an object
+- Instance attributes → unique per object, defined with self
+- Class attributes → shared across all objects
+- Accessed and modified using dot notation
+- New attributes can be added to objects dynamically
+- Deleting an attribute removes it from that object only
+
+
+--------------
+QUICK RECAP
+--------------
+- Attribute          →  variable belonging to object or class
+- Instance attribute →  unique to each object, uses self
+- Class attribute    →  shared by all objects
+- Dot notation       →  object.attribute to access
+- Dynamic adding     →  can add new attributes anytime
+- getattr/setattr/hasattr/delattr → built-in attribute functions
+
+==============================

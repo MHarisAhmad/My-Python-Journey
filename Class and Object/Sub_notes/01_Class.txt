@@ -1,0 +1,94 @@
+==============================
+        WHAT IS A CLASS?
+==============================
+
+--------------
+DEFINITION
+--------------
+- A class is a blueprint or template for creating objects
+- It defines what data (attributes) and behaviors (methods)
+  the objects made from it will have
+- A class itself does not hold any data — it just describes
+  what the objects will look like and do
+- Think of it as a cookie cutter — the cutter is the class,
+  the cookies are the objects
+
+
+--------------
+REAL LIFE ANALOGY
+--------------
+- Class  →  Blueprint of a House
+- Object →  Actual House built from that blueprint
+- Class  →  Recipe of a Dish
+- Object →  Actual Dish made from that recipe
+- One blueprint can create many houses
+- One class can create many objects
+
+
+--------------
+SYNTAX
+--------------
+- "class" keyword is used to define a class
+- Class name should always start with a Capital letter (convention)
+- Body of the class is indented
+
+  class ClassName:
+      # attributes and methods go here
+
+
+--------------
+SIMPLE EXAMPLE
+--------------
+  class Person:
+      pass     # empty class for now
+
+- "pass" is used when the class body is empty
+- This is a valid class — it just does nothing yet
+
+
+--------------
+NAMING CONVENTIONS
+--------------
+- Class names use PascalCase (each word starts with capital)
+  → Person, CarModel, BankAccount, StudentRecord
+- NOT snake_case like functions and variables
+  → person, car_model (wrong for class names)
+
+
+--------------
+WHAT GOES INSIDE A CLASS?
+--------------
+- Attributes  →  variables that store data about the object
+- Methods     →  functions that define the behavior of the object
+- __init__()  →  special method that runs when object is created
+
+  class Person:
+      species = "Human"            # attribute (class level)
+
+      def __init__(self, name):
+          self.name = name         # attribute (object level)
+
+      def greet(self):             # method
+          print(f"Hi, I am {self.name}")
+
+
+--------------
+KEY POINTS
+--------------
+- A class is just a definition — nothing runs until you create an object
+- A class can be reused to create as many objects as needed
+- Each object created from a class is independent
+- Classes help organize code in a clean, reusable, and logical way
+- Classes are the foundation of Object Oriented Programming (OOP)
+
+
+--------------
+QUICK RECAP
+--------------
+- class keyword        →  used to define a class
+- ClassName            →  PascalCase naming convention
+- Blueprint / Template →  what a class acts as
+- No data stored yet   →  class is just a definition
+- Objects              →  real instances made from the class
+
+==============================

@@ -1,0 +1,148 @@
+==============================
+       ATTRIBUTE FUNCTIONS
+==============================
+
+--------------
+DEFINITION
+--------------
+- Built-in Python functions used to interact with
+  object attributes dynamically
+- "Dynamically" means using a string name instead of
+  direct dot notation
+- There are 4 attribute functions:
+  getattr(), setattr(), hasattr(), delattr()
+
+
+--------------
+WHY USE THEM?
+--------------
+- Dot notation (obj.name) works when you know the attribute name
+- Attribute functions work when the attribute name is
+  stored in a variable or unknown until runtime
+- Useful in dynamic programming, loops, and flexible code
+
+
+--------------
+1. getattr()
+--------------
+- Gets the value of an attribute by name (as a string)
+- Same as obj.attribute but dynamic
+- Optional default value if attribute doesn't exist
+
+  Syntax:
+    getattr(object, "attribute_name")
+    getattr(object, "attribute_name", default)
+
+  Example:
+    class Person:
+        def __init__(self, name):
+            self.name = name
+
+    p1 = Person("Ali")
+
+    print(getattr(p1, "name"))           # Ali
+    print(getattr(p1, "salary", 0))      # 0 (default, no error)
+
+
+--------------
+2. setattr()
+--------------
+- Sets or updates the value of an attribute by name
+- Same as obj.attribute = value but dynamic
+- Can also add a brand new attribute
+
+  Syntax:
+    setattr(object, "attribute_name", value)
+
+  Example:
+    setattr(p1, "name", "Ahmed")
+    print(p1.name)    # Ahmed
+
+    setattr(p1, "salary", 50000)    # adds new attribute
+    print(p1.salary)                # 50000
+
+
+--------------
+3. hasattr()
+--------------
+- Checks if an attribute exists on an object
+- Returns True if it exists, False if it doesn't
+- Useful to avoid errors before accessing an attribute
+
+  Syntax:
+    hasattr(object, "attribute_name")
+
+  Example:
+    print(hasattr(p1, "name"))      # True
+    print(hasattr(p1, "address"))   # False
+
+
+--------------
+4. delattr()
+--------------
+- Deletes an attribute from an object
+- Same as del obj.attribute but dynamic
+- Raises AttributeError if attribute doesn't exist
+
+  Syntax:
+    delattr(object, "attribute_name")
+
+  Example:
+    delattr(p1, "name")
+    print(hasattr(p1, "name"))    # False — deleted
+
+
+--------------
+ALL 4 TOGETHER — FULL EXAMPLE
+--------------
+  class Person:
+      def __init__(self, name, age):
+          self.name = name
+          self.age = age
+
+  p1 = Person("Ali", 20)
+
+  print(hasattr(p1, "name"))         # True
+  print(getattr(p1, "name"))         # Ali
+  setattr(p1, "name", "Ahmed")
+  print(p1.name)                     # Ahmed
+  delattr(p1, "age")
+  print(hasattr(p1, "age"))          # False
+
+
+--------------
+DYNAMIC USE CASE — WHY THEY REALLY MATTER
+--------------
+  fields = ["name", "age"]
+
+  for field in fields:
+      print(getattr(p1, field))    # accesses each dynamically
+
+- You can't do p1.field — that would look for an
+  attribute literally called "field"
+- getattr(p1, field) reads the value of the variable
+  and uses it as the attribute name
+
+
+--------------
+KEY POINTS
+--------------
+- All 4 functions take the object and attribute name as string
+- getattr() → read, with optional default value
+- setattr() → write / update / add
+- hasattr() → check existence → returns True or False
+- delattr() → remove attribute
+- Most powerful when attribute name is stored in a variable
+
+
+--------------
+QUICK RECAP
+--------------
+- getattr(obj, "attr")         →  get value
+- getattr(obj, "attr", val)    →  get value with default
+- setattr(obj, "attr", val)    →  set / update value
+- hasattr(obj, "attr")         →  check if exists
+- delattr(obj, "attr")         →  delete attribute
+- Dynamic access               →  main reason to use them
+
+==============================

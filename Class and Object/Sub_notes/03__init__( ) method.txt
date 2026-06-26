@@ -1,0 +1,114 @@
+==============================
+      __init__() METHOD
+==============================
+
+--------------
+DEFINITION
+--------------
+- __init__() is a special built-in method in Python classes
+- It runs automatically every time a new object is created
+- Used to assign initial values to the object's attributes
+- Also called the "constructor" of the class
+- The double underscores __ before and after make it a
+  "magic method" or "dunder method"
+
+
+--------------
+WHY DO WE NEED IT?
+--------------
+- Without __init__(), you would have to manually set
+  every attribute after creating the object
+- __init__() lets you pass data at the time of object creation
+- Makes object creation clean, short, and automatic
+
+
+--------------
+SYNTAX
+--------------
+  class ClassName:
+      def __init__(self, param1, param2):
+          self.param1 = param1
+          self.param2 = param2
+
+
+--------------
+SIMPLE EXAMPLE
+--------------
+  class Person:
+      def __init__(self, name, age):
+          self.name = name
+          self.age = age
+
+  p1 = Person("Ali", 20)
+  # __init__ runs automatically here
+  # self.name = "Ali", self.age = 20
+
+  print(p1.name)    # Ali
+  print(p1.age)     # 20
+
+
+--------------
+HOW IT WORKS STEP BY STEP
+--------------
+- Step 1: You write → p1 = Person("Ali", 20)
+- Step 2: Python creates a new empty object
+- Step 3: Python automatically calls __init__(self, "Ali", 20)
+- Step 4: self.name = "Ali" and self.age = 20 are set
+- Step 5: Object p1 is now ready with its data
+
+
+--------------
+DEFAULT VALUES IN __init__()
+--------------
+- You can give parameters default values
+- Makes some arguments optional when creating an object
+
+  class Person:
+      def __init__(self, name, age=18):
+          self.name = name
+          self.age = age
+
+  p1 = Person("Ali")         # age defaults to 18
+  p2 = Person("Ahmed", 25)   # age is 25
+
+  print(p1.age)    # 18
+  print(p2.age)    # 25
+
+
+--------------
+__init__() WITH NO EXTRA PARAMETERS
+--------------
+- self is always required, but other params are optional
+
+  class Car:
+      def __init__(self):
+          self.wheels = 4
+          self.running = False
+
+  c1 = Car()
+  print(c1.wheels)     # 4
+  print(c1.running)    # False
+
+
+--------------
+KEY POINTS
+--------------
+- __init__() runs automatically on object creation
+- First parameter is always "self"
+- Used to initialize (set up) object attributes
+- Also called constructor
+- It is a magic method / dunder method
+- Default values can be set for parameters
+- It does not return anything — never use return with a value
+
+
+--------------
+QUICK RECAP
+--------------
+- __init__()     →  constructor, runs on object creation
+- self           →  refers to the object being created
+- self.attr      →  assigns attribute to the object
+- Default values →  make parameters optional
+- Dunder method  →  double underscore before and after name
+
+==============================
