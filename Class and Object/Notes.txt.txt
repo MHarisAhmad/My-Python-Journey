@@ -1,0 +1,188 @@
+--------------
+KEY TERMS SUMMARY
+--------------
+  Class        →  Blueprint / template
+  Object       →  Instance created from a class
+  __init__()   →  Constructor, runs on object creation
+  self         →  Refers to the current object
+  Attribute    →  Variable belonging to an object
+  Method       →  Function belonging to an object
+  Instance     →  Another word for object
+  Constructor  →  Another word for __init__()
+
+
+--------------
+
+==============================
+   CLASSES & OBJECTS IN PYTHON
+==============================
+
+--------------
+WHAT IS A CLASS?
+--------------
+A class is a blueprint or template for creating objects.
+It defines what attributes (data) and methods (behaviors)
+the objects created from it will have.
+
+Think of it like:
+  Class  →  Blueprint of a House
+  Object →  Actual House built from that blueprint
+
+Syntax:
+  class ClassName:
+      # attributes and methods
+
+
+--------------
+WHAT IS AN OBJECT?
+--------------
+An object is a real instance created from a class.
+You can create multiple objects from the same class,
+each with their own data.
+
+  p1 = Person()   # p1 is an object of class Person
+  p2 = Person()   # p2 is a separate object, same class
+
+
+--------------
+THE __init__() METHOD
+--------------
+A special method that runs automatically when an object is created.
+Used to assign initial values to the object's attributes.
+Also called the "constructor."
+
+  class Person:
+      def __init__(self, name, age):
+          self.name = name
+          self.age = age
+
+  p1 = Person("Ali", 20)
+  # __init__ runs automatically here
+
+
+--------------
+WHAT IS "self"?
+--------------
+"self" refers to the current object itself.
+It is always the first parameter in any method inside a class.
+Through "self", the object accesses its own attributes and methods.
+
+  self.name = name   # stores name inside this specific object
+
+Note: "self" is just a convention, you can name it anything,
+but always use "self" for readability.
+
+
+--------------
+ATTRIBUTES
+--------------
+Variables that belong to an object or class.
+
+Two types:
+
+1. Instance Attributes
+   - Defined inside __init__() using self
+   - Unique to each object
+   
+   class Person:
+       def __init__(self, name):
+           self.name = name    # instance attribute
+
+   p1 = Person("Ali")
+   p2 = Person("Ahmed")
+   # p1.name is "Ali", p2.name is "Ahmed" — separate for each
+
+
+2. Class Attributes
+   - Defined directly inside the class, outside any method
+   - Shared across ALL objects of that class
+
+   class Person:
+       species = "Human"    # class attribute
+
+   p1 = Person()
+   p2 = Person()
+   # both p1.species and p2.species are "Human"
+
+
+--------------
+METHODS
+--------------
+Functions defined inside a class are called methods.
+They describe the behaviors of the object.
+Always take "self" as the first parameter.
+
+  class Person:
+      def __init__(self, name):
+          self.name = name
+
+      def greet(self):                        # method
+          print(f"Hi, my name is {self.name}")
+
+  p1 = Person("Ali")
+  p1.greet()    # Output: Hi, my name is Ali
+
+
+--------------
+ATTRIBUTE FUNCTIONS (Related to Objects)
+--------------
+Built-in functions to interact with object attributes dynamically:
+
+  getattr(obj, "attr")          # get attribute value
+  setattr(obj, "attr", value)   # set / update attribute value
+  hasattr(obj, "attr")          # check if attribute exists → True/False
+  delattr(obj, "attr")          # delete an attribute
+
+
+--------------
+
+
+__str__() METHOD
+--------------
+Defines what gets printed when you print an object.
+Without it, printing an object shows a memory address.
+
+  class Person:
+      def __init__(self, name):
+          self.name = name
+
+      def __str__(self):
+          return f"Person: {self.name}"
+
+  p1 = Person("Ali")
+  print(p1)    # Output: Person: Ali
+
+
+--------------
+QUICK EXAMPLE — EVERYTHING TOGETHER
+--------------
+
+  class Car:
+      wheels = 4                         # class attribute
+
+      def __init__(self, brand, color):
+          self.brand = brand             # instance attribute
+          self.color = color             # instance attribute
+
+      def describe(self):                # method
+          print(f"{self.color} {self.brand} with {self.wheels} wheels")
+
+      def __str__(self):
+          return f"Car({self.brand}, {self.color})"
+
+
+  c1 = Car("Toyota", "Red")
+  c2 = Car("Honda", "Blue")
+
+  c1.describe()     # Red Toyota with 4 wheels
+  c2.describe()     # Blue Honda with 4 wheels
+  print(c1)         # Car(Toyota, Red)
+
+  print(hasattr(c1, "brand"))       # True
+  print(getattr(c1, "color"))       # Red
+  setattr(c1, "color", "Black")
+  print(c1.color)                   # Black
+  delattr(c1, "color")
+  print(hasattr(c1, "color"))       # False
+
+==============================
