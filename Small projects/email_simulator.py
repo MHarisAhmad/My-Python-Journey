@@ -23,7 +23,7 @@ class Email:
 
     def __str__(self):
         status = 'Read' if self.read else 'Unread'
-        return f"[{status}] From: {self.sender.name} | Subject: {self.subject}"
+        return f"[{status}] From: {self.sender.name} | Subject: {self.subject} | Time: {self.timestamp.strftime('%Y-%m-%d %H:%M')}"
         
 class User:
     def __init__(self, name):
@@ -33,6 +33,7 @@ class User:
     def send_email(self, receiver, subject, body):
         email = Email(sender=self, receiver=receiver, subject=subject, body=body)
         receiver.inbox.receive_email(email)
+        print(f'Email sent from {self.name} to {receiver.name}!\n')
 
 class Inbox:
     def __init__(self):
