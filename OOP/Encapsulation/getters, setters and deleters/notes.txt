@@ -1,0 +1,191 @@
+==============================
+      GETTERS AND SETTERS
+==============================
+
+--------------
+DEFINITION
+--------------
+- Getters → methods that retrieve (read) a value from an object
+- Setters → methods that set (write/modify) a value on an object
+- Properties → what connect getters and setters together
+
+--------------
+WHY WE NEED IT
+--------------
+- To control HOW attributes are read and changed
+- To run extra logic (like validation) silently behind the scenes
+- Cleaner than calling methods with () every time
+- Lets you use simple dot notation while complex logic runs underneath
+
+--------------
+WHAT IS A PROPERTY?
+--------------
+- A property looks like an attribute but behaves like a method under the hood
+- You access it with dot notation (no parentheses needed)
+- It can run extra logic when you get, set, or delete a value
+- Think of it as: "looks simple on the outside, does work on the inside"
+
+--------------
+WHAT IS A DECORATOR?
+--------------
+- A decorator is a function that adds extra behavior to another function/class
+- You place it above a method using @ symbol
+- @property turns a method into a property (so you access it like an attribute)
+- You don't need to know how to build decorators yet — just know how to use them
+
+--------------
+GETTER — SYNTAX & EXAMPLE
+--------------
+- Use @property decorator above the method
+- The method name becomes the property name
+- Access it like an attribute — no () needed
+
+    class Circle:
+        def __init__(self, radius):
+            self._radius = radius       # _radius = private attribute
+
+        @property
+        def radius(self):               # getter for radius
+            return self._radius
+
+        @property
+        def area(self):                 # getter that calculates on the fly
+            return 3.14 * (self._radius ** 2)
+
+    my_circle = Circle(3)
+    print(my_circle.radius)   # 3      → calls the getter automatically
+    print(my_circle.area)     # 28.26  → calculates every time it's accessed
+
+- Note: _radius uses single underscore = "this is private, don't touch directly"
+
+--------------
+SETTER — SYNTAX & EXAMPLE
+--------------
+- Use @property_name.setter decorator above the method
+- Same method name as the getter
+- Runs automatically when you assign a value with =
+- Perfect place to add validation before saving the value
+
+    class Circle:
+        def __init__(self, radius):
+            self.radius = radius        # calls the setter on creation too!
+
+        @property
+        def radius(self):               # getter
+            return self._radius
+
+        @radius.setter
+        def radius(self, value):        # setter
+            if value <= 0:
+                raise ValueError('Radius must be positive')
+            self._radius = value        # MUST use _radius here, not self.radius
+
+    my_circle = Circle(3)
+    print(my_circle.radius)            # 3   → getter called
+
+    my_circle.radius = 8               # setter called automatically
+    print(my_circle.radius)            # 8   → getter called
+
+--------------
+IMPORTANT — RECURSION TRAP
+--------------
+- Inside the setter, NEVER use self.radius = value
+- self.radius calls the setter → which calls the setter → infinite loop → RecursionError
+- Always use the underscore version: self._radius = value
+
+    # WRONG
+    @radius.setter
+    def radius(self, value):
+        self.radius = value    # calls itself forever → RecursionError
+
+    # CORRECT
+    @radius.setter
+    def radius(self, value):
+        self._radius = value   # saves to private attribute → no loop
+
+--------------
+HOW PYTHON CALLS THEM AUTOMATICALLY
+--------------
+- my_circle.radius        → Python calls the getter silently
+- my_circle.radius = 4   → Python calls the setter silently
+- No need to manually call .get_radius() or .set_radius()
+- Looks like simple attribute access, works like a method
+
+--------------
+DELETER — SYNTAX & EXAMPLE
+--------------
+- Use @property_name.deleter decorator
+- Runs custom logic when you use del on a property
+- Useful for cleanup or logging when an attribute is removed
+
+    class Circle:
+        def __init__(self, radius):
+            self.radius = radius
+
+        @property
+        def radius(self):               # getter
+            return self._radius
+
+        @radius.setter
+        def radius(self, value):        # setter
+            if value <= 0:
+                raise ValueError('Radius must be positive')
+            self._radius = value
+
+        @radius.deleter
+        def radius(self):               # deleter
+            print('Deleting radius...')
+            del self._radius            # actually removes the attribute
+
+    my_circle = Circle(33)
+    print(my_circle.radius)    # 33
+
+    del my_circle.radius       # Deleting radius... → deleter called
+
+    # trying to access after deletion:
+    try:
+        print(my_circle.radius)
+    except AttributeError as e:
+        print('Error:', e)     # Error: 'Circle' object has no attribute '_radius'
+
+--------------
+EDGE CASES
+--------------
+- You can have a getter without a setter (read-only property)
+- Trying to set a read-only property raises AttributeError
+- Using self.radius inside __init__ (not self._radius) ensures setter runs on creation
+- This means invalid values are caught immediately — even at object creation
+- After del, accessing the property raises AttributeError since _radius is gone
+
+--------------
+COMPARISON — METHOD vs PROPERTY
+--------------
+- Method  → must call with ()          → my_circle.get_radius()
+- Property → access like attribute     → my_circle.radius
+- Both run logic under the hood — property just looks cleaner
+- Use properties when you want attribute-like access with hidden logic
+
+--------------
+KEY POINTS
+--------------
+- @property turns a method into a readable property (getter)
+- @name.setter turns a method into a writable property (setter)
+- @name.deleter turns a method into a deletable property (deleter)
+- Always store data in _name (private), never self.name inside setter
+- Python calls getters and setters automatically — you just use dot notation
+- Setters are the right place to validate input before saving
+- Getters can also compute values on the fly (like area)
+
+--------------
+QUICK RECAP
+--------------
+- getter        → reads a value → use @property
+- setter        → sets/modifies a value → use @name.setter
+- deleter       → handles deletion → use @name.deleter
+- property      → ties getter + setter together, works like an attribute
+- @property     → decorator that turns a method into a getter
+- decorator     → adds extra behavior to a function using @ symbol
+- _radius       → private attribute — store actual data here
+- self.radius   → calls the getter or setter (dot notation)
+- RecursionError → happens if you use self.radius inside the setter
+- read-only     → property with getter but no setter
