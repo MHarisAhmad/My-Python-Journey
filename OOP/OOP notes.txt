@@ -1,0 +1,109 @@
+==============================
+     OBJECT-ORIENTED PROGRAMMING (OOP)
+==============================
+
+--------------
+DEFINITION
+--------------
+- OOP is a programming style where you treat everything in code like a real-world object
+- Instead of writing scattered code, you group related data and actions together
+- Everything is modeled as an "object" that has properties and behaviors
+
+--------------
+WHY WE NEED IT
+--------------
+- Makes code organized and easy to read
+- Lets you reuse code instead of rewriting it
+- Makes large programs easier to manage and update
+- Models real-world things naturally (a Car, a BankAccount, a Student)
+
+--------------
+4 KEY PRINCIPLES
+--------------
+- Encapsulation  → hiding internal data, exposing only safe methods
+- Inheritance    → a class can inherit features from another class
+- Polymorphism   → same method name, different behavior in different classes
+- Abstraction    → hiding complex details, showing only what's necessary
+
+--------------
+CLASS — THE BLUEPRINT
+--------------
+- A class is like a blueprint or template
+- It defines what attributes (data) and methods (actions) an object will have
+- You create a class once, then use it to make many objects
+
+--------------
+SYNTAX
+--------------
+- Basic class syntax:
+
+    class ClassName:
+        def __init__(self, parameters):
+            self.attribute = value   # stores data on the object
+
+        def method_name(self):
+            # method logic here
+
+- __init__ is a special method that runs automatically when an object is created
+- "self" refers to the current object being created
+
+--------------
+SIMPLE EXAMPLE
+--------------
+
+    class Car:
+        def __init__(self, brand, color):
+            self.brand = brand   # attribute: stores the brand
+            self.color = color   # attribute: stores the color
+
+    # creating two objects from the same class
+    car1 = Car('Toyota', 'red')    # object 1
+    car2 = Car('Lambo', 'green')   # object 2
+
+    print(car1.brand)  # Toyota  → accessing car1's attribute
+    print(car2.color)  # green   → accessing car2's attribute
+
+--------------
+DEEP EXPLANATION STEP BY STEP
+--------------
+- Step 1: You write a class (the blueprint)
+- Step 2: You create an object by calling the class like a function → Car('Toyota', 'red')
+- Step 3: Python automatically calls __init__ with the values you passed
+- Step 4: self.brand = 'Toyota' stores 'Toyota' on that specific object
+- Step 5: Now car1.brand gives you 'Toyota', car2.brand gives you 'Lambo'
+- Each object is independent — changing car1 doesn't affect car2
+
+--------------
+OBJECT vs CLASS
+--------------
+- Class  → the blueprint (written once)
+- Object → the actual thing built from that blueprint (can make many)
+- Example: Car class = blueprint | car1, car2 = actual car objects
+
+--------------
+ATTRIBUTES vs METHODS
+--------------
+- Attributes → data stored on the object (self.brand, self.color)
+- Methods    → actions the object can perform (def drive(self): ...)
+
+--------------
+KEY POINTS
+--------------
+- A class is defined using the "class" keyword
+- __init__ runs automatically when you create an object
+- "self" always refers to the current object
+- One class can create unlimited objects
+- Each object has its own copy of the attributes
+- OOP has 4 principles: Encapsulation, Inheritance, Polymorphism, Abstraction
+
+--------------
+QUICK RECAP
+--------------
+- OOP          → style of coding using objects
+- class        → blueprint/template
+- object       → instance created from a class
+- __init__     → runs automatically when object is created
+- self         → refers to the current object
+- attribute    → data stored on an object (self.x = value)
+- method       → action/function defined inside a class
+- 4 principles → Encapsulation, Inheritance, Polymorphism, Abstraction

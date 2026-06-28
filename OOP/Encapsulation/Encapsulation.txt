@@ -1,0 +1,185 @@
+==============================
+        ENCAPSULATION
+==============================
+
+--------------
+DEFINITION
+--------------
+- Encapsulation means bundling attributes and methods together inside one class
+- It also means hiding the internal data from direct outside access
+- You expose only safe, controlled "doors" (public methods) to interact with the data
+
+--------------
+WHY WE NEED IT
+--------------
+- Prevents outside code from accidentally breaking internal data
+- Keeps all validation logic in one place
+- Makes code safer and easier to update
+- You can change internal logic without breaking outside code
+
+--------------
+THE CORE IDEA
+--------------
+- Think of a wallet: you can deposit or withdraw money, but you can't directly change the balance number
+- deposit() and withdraw() are the "doors" (public methods)
+- The balance itself is hidden (private attribute)
+
+--------------
+3 LEVELS OF ACCESS
+--------------
+- Public      → no prefix      → anyone can access → self.balance
+- Convention  → single underscore (_) → "don't touch this" warning → self._balance
+- Truly Private → double underscore (__) → Python blocks access → self.__balance
+
+--------------
+SINGLE UNDERSCORE — SYNTAX & EXAMPLE
+--------------
+- Syntax: self._attribute_name
+- Just a naming convention — Python does NOT enforce it
+- Tells other developers: "this is for internal use only"
+
+    class Wallet:
+        def __init__(self, balance):
+            self._balance = balance   # convention: internal use only
+
+        def deposit(self, amount):
+            if amount > 0:
+                self._balance += amount   # safe way to change balance
+
+- Note: you CAN still access self._balance from outside, Python won't stop you
+- But you SHOULD NOT — it breaks the rules of encapsulation
+
+--------------
+DOUBLE UNDERSCORE — SYNTAX & EXAMPLE
+--------------
+- Syntax: self.__attribute_name
+- Python actually enforces this — truly private
+- Accessing it from outside raises an AttributeError
+
+    class Wallet:
+        def __init__(self, balance):
+            self.__balance = balance   # truly private!
+
+    account = Wallet(500)
+    print(account.__balance)   # AttributeError: no attribute '__balance'
+
+--------------
+WHY DOES DOUBLE UNDERSCORE BLOCK ACCESS?
+--------------
+- Python uses "name mangling" behind the scenes
+- self.__balance gets renamed to self._Wallet__balance internally
+- So account.__balance doesn't exist from the outside — Python renamed it
+- You CAN still access it using account._Wallet__balance — but you should never do this
+
+--------------
+GETTER METHOD — READING PRIVATE DATA SAFELY
+--------------
+- Since __balance is hidden, you need a method to read it safely
+- This is called a "getter" method
+- By convention, named get_something()
+
+    class Wallet:
+        def __init__(self, balance):
+            self.__balance = balance
+
+        def deposit(self, amount):
+            if amount > 0:
+                self.__balance += amount    # safe write
+
+        def withdraw(self, amount):
+            if 0 < amount <= self.__balance:
+                self.__balance -= amount    # safe remove
+
+        def get_balance(self):
+            return self.__balance           # safe read door
+
+    acct_one = Wallet(100)
+    acct_one.deposit(50)
+    print(acct_one.get_balance())    # 150
+
+    acct_two = Wallet(450)
+    acct_two.withdraw(28)
+    print(acct_two.get_balance())    # 422
+
+--------------
+PRIVATE VALIDATION METHOD
+--------------
+- You can also make methods private using __
+- A __validate method checks input before any action happens
+- Runs silently behind the scenes inside public methods
+- Reuse it in multiple methods — no copy-pasting checks
+
+    class Wallet:
+        def __init__(self):
+            self.__balance = 0
+
+        def __validate(self, amount):        # private helper method
+            if amount < 0:
+                raise ValueError('Amount must be positive')
+
+        def deposit(self, amount):
+            self.__validate(amount)          # check runs silently here
+            self.__balance += amount
+
+        def withdraw(self, amount):
+            self.__validate(amount)          # same check reused here
+            if amount > self.__balance:
+                raise ValueError('Insufficient funds')
+            self.__balance -= amount
+
+        def get_balance(self):
+            return self.__balance
+
+    acct_one = Wallet()
+    acct_one.deposit(3)
+    print(acct_one.get_balance())    # 3
+
+    acct_one.deposit(50)
+    print(acct_one.get_balance())    # 53
+
+    acct_one.deposit(-4)             # ValueError: Amount must be positive
+    acct_one.withdraw(-8)            # ValueError: Amount must be positive
+    acct_one.withdraw(58)            # ValueError: Insufficient funds
+
+--------------
+EDGE CASES & VARIATIONS
+--------------
+- Single underscore (_x) → convention only, NOT enforced by Python
+- Double underscore (__x) → enforced via name mangling
+- You can still "break in" using obj._ClassName__x — but never do this
+- Private methods (__validate) also get name-mangled the same way
+- raise ValueError → cleanly stops bad input with a readable error message
+- __init__ balance can start at 0 (no starting balance required)
+
+--------------
+COMPARISON: _ vs __
+--------------
+- self._balance   → warning sign only, anyone can still access it
+- self.__balance  → truly blocked, AttributeError if accessed directly
+- Use _  when you want to signal "internal use" to teammates
+- Use __ when you want Python to strictly enforce privacy
+
+--------------
+KEY POINTS
+--------------
+- Encapsulation = hide data + expose safe methods
+- Public methods are the "doors" — deposit, withdraw, get_balance
+- Private attributes/methods live behind those doors
+- Single underscore = convention, not enforced
+- Double underscore = enforced by Python (name mangling)
+- Getter method = safe way to read hidden data
+- Private __validate = centralized input checking, reused everywhere
+- raise ValueError = the right way to reject bad input
+
+--------------
+QUICK RECAP
+--------------
+- encapsulation  → hide data, expose only safe methods
+- self._x        → convention private (not truly blocked)
+- self.__x       → truly private (Python enforces via name mangling)
+- name mangling  → Python renames __x to _ClassName__x internally
+- getter method  → get_balance() — safe door to read private data
+- public method  → deposit(), withdraw() — safe doors to change data
+- __validate     → private helper method, runs silently behind the scenes
+- raise ValueError → stops bad input with a clear error
+- AttributeError → what you get when trying to access __x from outside
