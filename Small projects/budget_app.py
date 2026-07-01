@@ -8,11 +8,13 @@ class Category:
             'description': description
         })
         return f"Added {amount} in the ledger"
+    
     def withdraw(self, amount, description = ""):
         if self.check_funds(amount):
-            return "Valid amount"
+            self.ledger.append({"amount": -amount, "description": description})
+            return True
         else:
-            return "Invalid amount"
+            return False
         
         
     
@@ -32,5 +34,6 @@ def create_spend_chart(categories):
     pass
 
 person = Category("Ali")
-person.deposit(500, "init")
-print(person.withdraw(501,"my first withdraw check"))
+person.deposit(500, "First deposit")
+print(person.withdraw(600,"first withdraw"))
+print(person.ledger)
