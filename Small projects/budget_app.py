@@ -57,14 +57,60 @@ class Category:
         return output
     
 def create_spend_chart(categories):
-    pass
+    # Calculate total withdrawals for each category
+    spent = []
 
-person = Category("Ali")
-second = Category("Ahmad")
-person.deposit(500, "First")
-person.withdraw(200, "First withdraw")
-person.transfer(200, second)
-print(person)
+    for category in categories:
+        total = 0
+        for item in category.ledger:
+            if item["amount"] < 0:
+                total += -item["amount"]
+        spent.append(total)
 
-second.transfer(100, person)
-print(second)
+    total_spent = sum(spent)
+
+    # Calculate percentages rounded down to nearest 10
+    percentages = []
+    for amount in spent:
+        percent = int((amount / total_spent) * 100)
+        percentages.append((percent // 10) * 10)
+
+    # Build chart
+    output = "Percentage spent by category\n"
+
+    for i in range(100, -1, -10):
+        output += f"{i:>3}|"
+        for percent in percentages:
+            if percent >= i:
+                output += " o "
+            else:
+                output += "   "
+        output += " \n"
+
+    # Horizontal line
+    output += "    " + "-" * (len(categories) * 3 + 1) + "\n"
+
+    # Category names vertically
+    names = [category.name for category in categories]
+    max_length = max(len(name) for name in names)
+
+    for i in range(max_length):
+        output += "     "
+        for name in names:
+            if i < len(name):
+                output += name[i] + "  "
+            else:
+                output += "   "
+        output += "\n"
+
+    # Remove final newline
+    return output.rstrip("\n")
+
+
+food = Category("Food")
+veg = Category("Vegetables")
+food.deposit(5000, "Deposit: 1")
+food.withdraw(200, "Withdraw: 1")
+food.transfer(500, veg)
+veg.withdraw(200, "Withdraw_01")
+print(create_spend_chart([food, veg]))
