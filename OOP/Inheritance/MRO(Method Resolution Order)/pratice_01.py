@@ -7,7 +7,7 @@ class B:
 class C(A, B):
     pass
 C().show()
-
+#----------------------------
 class D(B,A):
     pass
 D().show()
